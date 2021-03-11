@@ -21,7 +21,7 @@ class _LoginPage extends State<Login> {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Productos()),
       );
@@ -36,8 +36,12 @@ class _LoginPage extends State<Login> {
         // ignore: unused_local_variable
         final UserCredential user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
-      } catch (e) {
-        print('e');
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
       }
     }
   }
@@ -128,7 +132,7 @@ class _LoginPage extends State<Login> {
                   password,
                   SizedBox(height: 20.0),
                   GestureDetector(
-                    child: Text('¿Olvidaste tu contraseña?'),
+                    child: const Text('¿Olvidaste tu contraseña?'),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Recuperar()));
@@ -140,7 +144,7 @@ class _LoginPage extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('¿No tienes cuenta? '),
+                      const Text('¿No tienes cuenta? '),
                       GestureDetector(
                         child: Text(
                           'Registrate',
