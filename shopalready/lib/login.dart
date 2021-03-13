@@ -1,8 +1,11 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
+//import 'dart:html';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:shopalready/main.dart';
 import 'package:shopalready/productos.dart';
+import 'package:shopalready/prueba.dart';
 import 'package:shopalready/recuperar.dart';
 import 'package:shopalready/registro.dart';
 
@@ -14,12 +17,12 @@ class Login extends StatefulWidget {
 class _LoginPage extends State<Login> {
   final formKey = new GlobalKey<FormState>();
 
-  String _email;
-  String _password;
+  late String _email;
+  late String _password;
 
   bool validateAndSave() {
     final form = formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
       Navigator.pushReplacement(
         context,
@@ -50,9 +53,8 @@ class _LoginPage extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final email = TextFormField(
-      validator: (value) =>
-          EmailValidator.validate(value) ? null : "Ingrese un correo valido",
-      onSaved: (value) => _email = value,
+      validator: (value) => (value) != null ? null : "Ingrese un correo valido",
+      onSaved: (value) => _email = value!,
       keyboardType: TextInputType.emailAddress,
       obscureText: false,
       style: style,
@@ -65,12 +67,12 @@ class _LoginPage extends State<Login> {
     );
     final password = TextFormField(
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Ingresar contraseña';
         }
         return null;
       },
-      onSaved: (value) => _password = value,
+      onSaved: (value) => _password = value!,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -79,7 +81,7 @@ class _LoginPage extends State<Login> {
           color: Colors.black,
         ),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Contraseña',
+        hintText: AppLocalizations.of(context)!.contrasena,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -94,7 +96,7 @@ class _LoginPage extends State<Login> {
           validateAndSubmit();
         },
         child: Text(
-          'Iniciar sesión',
+          AppLocalizations.of(context)!.iniSe,
           textAlign: TextAlign.center,
           style: style.copyWith(
             color: Colors.black,
@@ -102,15 +104,15 @@ class _LoginPage extends State<Login> {
         ),
       ),
     );
+
     Size size = MediaQuery.of(context).size;
     return Material(
         child: Container(
             color: Colors.white,
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
+                key: formKey,
+                child: Column(children: <Widget>[
                   SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +134,7 @@ class _LoginPage extends State<Login> {
                   password,
                   SizedBox(height: 20.0),
                   GestureDetector(
-                    child: const Text('¿Olvidaste tu contraseña?'),
+                    child: Text(AppLocalizations.of(context)!.olviContra),
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Recuperar()));
@@ -144,13 +146,12 @@ class _LoginPage extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const Text('¿No tienes cuenta? '),
+                      Text(AppLocalizations.of(context)!.noTienes),
                       GestureDetector(
-                        child: Text(
-                          'Registrate',
-                          style: style.copyWith(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
+                        child: Text(AppLocalizations.of(context)!.registrate,
+                            style: style.copyWith(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
                         onTap: () {
                           Navigator.push(
                               context,
@@ -159,9 +160,21 @@ class _LoginPage extends State<Login> {
                         },
                       ),
                     ],
-                  )
-                ],
-              ),
-            )));
+                  ),
+                  SizedBox(height: 20.0),
+                  IconButton(
+                    icon: const Icon(Icons.language),
+                    onPressed: () {
+                      //MyApp.cambiarIdioma(context, Locale('en', ''));
+                      //Navigator.push(context,
+                      //  MaterialPageRoute(builder: (context) => Prueba()));
+                      showDialog(
+                        context: context,
+                        builder: (_) => Prueba(),
+                      );
+                    },
+                  ),
+                  //Prueba(radioValue: _radioValue),
+                ]))));
   }
 }

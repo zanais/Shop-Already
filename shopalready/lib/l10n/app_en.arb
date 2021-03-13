@@ -1,0 +1,9 @@
+{
+  "helloWorld": "Hello World!",
+  "contrasena": "Password",
+  "olviContra": "Forgot your password?",
+  "iniSe": "Login",
+  "noTienes": "Dont have an account?",
+  "registrate": "Register",
+  "busqueda":"Search"
+}

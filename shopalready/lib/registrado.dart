@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 
 class Registrado extends StatefulWidget {
-  Registrado({Key key}) : super(key: key);
-
   @override
   _RegistradoState createState() => _RegistradoState();
 }

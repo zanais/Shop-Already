@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shopalready/productos.dart';
 
 class Carrito extends StatefulWidget {
-  Carrito({Key key}) : super(key: key);
-
   @override
   _ProductosState createState() => _ProductosState();
 }
@@ -16,7 +14,7 @@ class _ProductosState extends State<Carrito> {
 
   @override
   Widget build(BuildContext context) {
-    Widget salirButton = FlatButton(
+    Widget salirButton = TextButton(
       child: Text("Salir"),
       onPressed: () {
         _auth.signOut();
@@ -27,7 +25,7 @@ class _ProductosState extends State<Carrito> {
         );
       },
     );
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancelar"),
       onPressed: () {
         Navigator.pop(context);
@@ -50,7 +48,7 @@ class _ProductosState extends State<Carrito> {
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text('Usuario'),
-              accountEmail: Text(user.email),
+              accountEmail: Text('email'),
               decoration: BoxDecoration(
                 color: Colors.red[200],
               ),

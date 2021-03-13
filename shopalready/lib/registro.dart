@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
-import 'package:email_validator/email_validator.dart';
+// ignore: import_of_legacy_library_into_null_safe
+
 import 'package:shopalready/registrado.dart';
 
 // ignore: must_be_immutable
@@ -13,17 +14,15 @@ class Registro extends StatefulWidget {
 class _RegistroPage extends State<Registro> {
   final formKey = new GlobalKey<FormState>();
   var confirmPass;
-  String _email;
-  String _password;
+  late String _email;
+  late String _password;
 
   bool validateAndSave() {
     final form = formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Registrado()),
-      );
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => Registrado()));
       return true;
     }
     return false;
@@ -38,12 +37,13 @@ class _RegistroPage extends State<Registro> {
           // ignore: missing_return
           .then((user) {
         try {
-          FirebaseAuth.instance.currentUser.sendEmailVerification();
+          FirebaseAuth.instance.currentUser!.sendEmailVerification();
           //Navigator.pop(context);
-          return user;
+
         } catch (e) {
           print(e);
         }
+        return user;
       });
     }
   }
@@ -53,9 +53,9 @@ class _RegistroPage extends State<Registro> {
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
     final email = TextFormField(
-      validator: (value) =>
-          EmailValidator.validate(value) ? null : "Ingrese un correo valido",
-      onSaved: (value) => _email = value,
+      /*validator: (value) =>
+          EmailValidator.validate(value) ? null : "Ingrese un correo valido",*/
+      onSaved: (value) => _email = value!,
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -69,14 +69,14 @@ class _RegistroPage extends State<Registro> {
       ),
     );
     final password = TextFormField(
-      validator: (String value) {
+      validator: (value) {
         confirmPass = value;
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Ingresar contraseña';
         }
         return null;
       },
-      onSaved: (value) => _password = value,
+      onSaved: (value) => _password = value!,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -91,7 +91,7 @@ class _RegistroPage extends State<Registro> {
     );
     final password2 = TextFormField(
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Ingresar contraseña';
         }
         if (value != confirmPass) {

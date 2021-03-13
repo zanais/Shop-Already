@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 
 class Renuevo extends StatefulWidget {
-  Renuevo({Key key}) : super(key: key);
-
   @override
   _RegistradoState createState() => _RegistradoState();
 }

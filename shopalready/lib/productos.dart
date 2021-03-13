@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shopalready/carrito.dart';
-import 'package:shopalready/dise%C3%B1o_productos.dart';
+import 'package:shopalready/diseño_productos.dart';
 import 'package:shopalready/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopalready/prueba.dart';
 
 class Productos extends StatefulWidget {
-  Productos({Key key}) : super(key: key);
-
   @override
   _ProductosState createState() => _ProductosState();
 }
@@ -17,18 +17,18 @@ class _ProductosState extends State<Productos> {
 
   @override
   Widget build(BuildContext context) {
-    Widget salirButton = FlatButton(
+    Widget salirButton = TextButton(
       child: Text("Salir"),
       onPressed: () {
         _auth.signOut();
         print('salido');
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Login()),
         );
       },
     );
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancelar"),
       onPressed: () {
         Navigator.pop(context);
@@ -72,6 +72,16 @@ class _ProductosState extends State<Productos> {
                   },
                 ),
                 ListTile(
+                  leading: Icon(Icons.language),
+                  title: Text('Traducir'),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => Prueba(),
+                    );
+                  },
+                ),
+                ListTile(
                     leading: Icon(Icons.input),
                     title: Text('Cerrar Sesión'),
                     onTap: () {
@@ -101,7 +111,7 @@ class _ProductosState extends State<Productos> {
                           Icons.search,
                           color: Colors.black,
                         ),
-                        hintText: 'Busqueda',
+                        hintText: AppLocalizations.of(context)!.busqueda,
                         hintStyle: TextStyle(color: Colors.black),
                       ))),
               Expanded(
@@ -109,7 +119,7 @@ class _ProductosState extends State<Productos> {
                 children: <Widget>[
                   ListView.builder(
                     itemCount: 4,
-                    itemBuilder: (context, index) => ProductCard(),
+                    itemBuilder: (context, index) => ProductCard(index),
                   )
                 ],
               ))

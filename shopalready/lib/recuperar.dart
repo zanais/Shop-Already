@@ -1,4 +1,5 @@
-import 'package:email_validator/email_validator.dart';
+// ignore: import_of_legacy_library_into_null_safe
+//import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -12,11 +13,11 @@ class Recuperar extends StatefulWidget {
 
 class _Recuperarlo extends State<Recuperar> {
   final formKey = new GlobalKey<FormState>();
-  String _email;
+  late String _email;
 
   bool validateAndSave() {
     final form = formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
       Navigator.push(
         context,
@@ -30,13 +31,7 @@ class _Recuperarlo extends State<Recuperar> {
   void resetPassword() async {
     // ignore: unused_local_variable
     if (validateAndSave()) {
-      // ignore: unused_local_variable
-      UserCredential user =
-          // ignore: missing_return
-          await FirebaseAuth.instance
-              .sendPasswordResetEmail(email: _email)
-              // ignore: missing_return
-              .then((user) {});
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
     }
   }
 
@@ -44,9 +39,9 @@ class _Recuperarlo extends State<Recuperar> {
   @override
   Widget build(BuildContext context) {
     final email = TextFormField(
-      validator: (value) =>
-          EmailValidator.validate(value) ? null : "Ingrese un correo valido",
-      onSaved: (value) => _email = value,
+      /*validator: (value) =>
+          EmailValidator.validate(value) ? null : "Ingrese un correo valido",*/
+      onSaved: (value) => _email = value!,
       obscureText: false,
       style: style,
       decoration: InputDecoration(
