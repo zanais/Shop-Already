@@ -61,7 +61,7 @@ class _LoginPage extends State<Login> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email, color: Colors.black),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Email',
+        hintText: AppLocalizations.of(context)!.email,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -144,7 +144,7 @@ class _LoginPage extends State<Login> {
                   loginButon,
                   SizedBox(height: 20.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(AppLocalizations.of(context)!.noTienes),
                       GestureDetector(
@@ -153,7 +153,7 @@ class _LoginPage extends State<Login> {
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold)),
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Registro()));

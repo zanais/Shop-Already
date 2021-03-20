@@ -6,4 +6,22 @@
   "noTienes": "¿No tienes cuenta?",
   "registrate": "Registrate",
   "busqueda":"Busqueda"
+  "email": "Correo Electronico",
+  "lenguaje":"Idioma",
+  "espanol":"Español",
+  "ingles":"Inglés",
+  "aceptar":"Aceptar",
+  "graciaspor":"Gracias por registrarse, se envió un correo para confirmación de su cuenta",
+  "recuperar":"Recuperar contraseña",
+  "seenvio":"Se envió un correo para cambiar su contraseña",
+  "productos":"Productos",
+  "traducir":"Traducir",
+  "carrito":"Carrito",
+  "cancelar":"Cancelar",
+  "deseasalir":"¿Desea salir?",
+  "salir":"Salir",
+  "cerrar":"Cerrar Sesión",
+  "confirmar":"Confirmar contraseña",
+  "yatienes":"¿Ya tienes cuenta?"
+
 }

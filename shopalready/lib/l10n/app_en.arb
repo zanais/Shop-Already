@@ -5,5 +5,22 @@
   "iniSe": "Login",
   "noTienes": "Dont have an account?",
   "registrate": "Register",
-  "busqueda":"Search"
+  "busqueda":"Search",
+  "email": "Email",
+  "lenguaje":"Language",
+  "espanol":"Español",
+  "ingles":"English",
+  "aceptar":"Accept",
+  "graciaspor":"Thank you for registering, an email was sent to confirm your account",
+  "recuperar":"Recover password",
+  "seenvio":"An email was sent to change your password",
+  "productos":"Product",
+  "traducir":"Translate",
+  "carrito":"Shopping Cart",
+  "cancelar":"Cancel",
+  "deseasalir":"¿Desea salir?",
+  "salir":"Exit",
+  "cerrar":"Log out",
+  "confirmar":"Confirm password",
+  "yatienes":"Do you have an account?"
 }

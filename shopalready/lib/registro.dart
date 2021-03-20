@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 // ignore: import_of_legacy_library_into_null_safe
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopalready/registrado.dart';
 
 // ignore: must_be_immutable
@@ -64,7 +64,7 @@ class _RegistroPage extends State<Registro> {
           color: Colors.black,
         ),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Email',
+        hintText: AppLocalizations.of(context)!.email,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -85,7 +85,7 @@ class _RegistroPage extends State<Registro> {
           color: Colors.black,
         ),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Contraseña',
+        hintText: AppLocalizations.of(context)!.contrasena,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -107,7 +107,7 @@ class _RegistroPage extends State<Registro> {
           color: Colors.black,
         ),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Confirmar Contraseña',
+        hintText: AppLocalizations.of(context)!.confirmar,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -122,7 +122,7 @@ class _RegistroPage extends State<Registro> {
           validateAndSubmit();
         },
         child: Text(
-          'Registrate',
+          AppLocalizations.of(context)!.registrate,
           textAlign: TextAlign.center,
           style: style.copyWith(
             color: Colors.black,
@@ -143,7 +143,7 @@ class _RegistroPage extends State<Registro> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 35.0),
-                  Text('Registrate',
+                  Text(AppLocalizations.of(context)!.registrate,
                       style: style.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -161,21 +161,21 @@ class _RegistroPage extends State<Registro> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
-                        '¿Ya tienes cuenta?',
+                        AppLocalizations.of(context)!.yatienes,
                         style: style.copyWith(
                           fontSize: 15.0,
                         ),
                       ),
                       GestureDetector(
                         child: Text(
-                          'Inicia Sesión',
+                          AppLocalizations.of(context)!.iniSe,
                           style: style.copyWith(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 15.0),
                         ),
                         onTap: () {
-                          Navigator.push(context,
+                          Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) => Login()));
                         },
                       ),

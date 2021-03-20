@@ -2,7 +2,7 @@
 //import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopalready/renuevo.dart';
 
 // ignore: must_be_immutable
@@ -47,7 +47,7 @@ class _Recuperarlo extends State<Recuperar> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Email',
+        hintText: AppLocalizations.of(context)!.email,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -62,7 +62,7 @@ class _Recuperarlo extends State<Recuperar> {
           resetPassword();
         },
         child: Text(
-          'Aceptar',
+          AppLocalizations.of(context)!.aceptar,
           textAlign: TextAlign.center,
           style: style.copyWith(
             color: Colors.black,
@@ -81,7 +81,7 @@ class _Recuperarlo extends State<Recuperar> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Recuperar contraseña',
+                    AppLocalizations.of(context)!.recuperar,
                     style: style.copyWith(
                         fontWeight: FontWeight.bold, fontSize: 35.0),
                   ),

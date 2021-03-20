@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Renuevo extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _RegistradoState extends State<Renuevo> {
               context, MaterialPageRoute(builder: (context) => Login()));
         },
         child: Text(
-          'Aceptar',
+          AppLocalizations.of(context)!.aceptar,
           textAlign: TextAlign.center,
           style: style.copyWith(
             color: Colors.black,
@@ -39,7 +40,7 @@ class _RegistradoState extends State<Renuevo> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Se envió un correo para cambiar su contraseña',
+                AppLocalizations.of(context)!.seenvio,
                 style: style.copyWith(
                   fontSize: 25.0,
                 ),

@@ -17,11 +17,11 @@ class _PruebaState extends State<Prueba> {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text('Idioma'),
+      title: Text(AppLocalizations.of(context)!.lenguaje),
       children: <Widget>[
         Text(AppLocalizations.of(context)!.helloWorld),
         ListTile(
-          title: const Text('Español'),
+          title: Text(AppLocalizations.of(context)!.espanol),
           leading: Radio(
             value: Numeros.uno,
             groupValue: number,
@@ -32,7 +32,7 @@ class _PruebaState extends State<Prueba> {
           ),
         ),
         ListTile(
-          title: const Text('English'),
+          title: Text(AppLocalizations.of(context)!.ingles),
           leading: Radio(
             value: Numeros.dos,
             groupValue: number,
@@ -51,7 +51,7 @@ class _PruebaState extends State<Prueba> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Aceptar"))
+                  child: Text(AppLocalizations.of(context)!.aceptar))
             ],
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shopalready/productos.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Carrito extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _ProductosState extends State<Carrito> {
   @override
   Widget build(BuildContext context) {
     Widget salirButton = TextButton(
-      child: Text("Salir"),
+      child: Text(AppLocalizations.of(context)!.salir),
       onPressed: () {
         _auth.signOut();
         print('salido');
@@ -26,13 +27,13 @@ class _ProductosState extends State<Carrito> {
       },
     );
     Widget cancelButton = TextButton(
-      child: Text("Cancelar"),
+      child: Text(AppLocalizations.of(context)!.cancelar),
       onPressed: () {
         Navigator.pop(context);
       },
     );
     AlertDialog alert = AlertDialog(
-      title: Text("¿Desea salir?"),
+      title: Text(AppLocalizations.of(context)!.deseasalir),
       actions: [salirButton, cancelButton],
     );
     //Size size = MediaQuery.of(context).size;
@@ -40,7 +41,7 @@ class _ProductosState extends State<Carrito> {
       onWillPop: () async => false,
       child: new Scaffold(
         appBar: AppBar(
-          title: Text('Carrito'),
+          title: Text(AppLocalizations.of(context)!.carrito),
           backgroundColor: Colors.teal[100],
         ),
         backgroundColor: Colors.white,
@@ -55,7 +56,7 @@ class _ProductosState extends State<Carrito> {
             ),
             ListTile(
               leading: Icon(Icons.store_mall_directory),
-              title: Text('Productos'),
+              title: Text(AppLocalizations.of(context)!.productos),
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Productos()));
@@ -63,14 +64,14 @@ class _ProductosState extends State<Carrito> {
             ),
             ListTile(
               leading: Icon(Icons.shopping_cart),
-              title: Text('Carrito'),
+              title: Text(AppLocalizations.of(context)!.carrito),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
                 leading: Icon(Icons.input),
-                title: Text('Cerrar Sesión'),
+                title: Text(AppLocalizations.of(context)!.cerrar),
                 onTap: () {
                   showDialog(
                     context: context,
