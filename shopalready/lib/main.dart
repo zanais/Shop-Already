@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 //import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopalready/tipos_usuarios.dart';
+import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Shop Already',
+      routes: {Login.routeName: (ctx) => Login()},
       home: TiposDeUsuarios(),
     );
   }

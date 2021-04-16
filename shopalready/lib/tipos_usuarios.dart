@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 import 'package:shopalready/prueba.dart';
+import 'login.dart';
 
 class TiposDeUsuarios extends StatefulWidget {
   @override
@@ -22,9 +23,10 @@ class _TiposDeUsuariosState extends State<TiposDeUsuarios> {
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
             number = 1;
-            print(number);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Login()));
+            // print(number);
+            Navigator.pushNamed(context, Login.routeName, arguments: number);
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => Login()));
           },
           child: Text(
             'Cliente',
@@ -44,9 +46,10 @@ class _TiposDeUsuariosState extends State<TiposDeUsuarios> {
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
             number = 2;
-            print(number);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Login()));
+            // print(number);
+            Navigator.pushNamed(context, Login.routeName, arguments: number);
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => Login()));
           },
           child: Text(
             'Vendedor',

@@ -13,6 +13,7 @@ import 'package:shopalready/registro.dart';
 //import 'package:shopalready/tipos_usuarios.dart';
 
 class Login extends StatefulWidget {
+  static const routeName = "login";
   @override
   State<StatefulWidget> createState() => _LoginPage();
 }
@@ -55,6 +56,7 @@ class _LoginPage extends State<Login> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   @override
   Widget build(BuildContext context) {
+    var userType = ModalRoute.of(context)!.settings.arguments;
     final email = TextFormField(
       validator: (value) => (value) != null ? null : "Ingrese un correo valido",
       onSaved: (value) => _email = value!,
@@ -108,7 +110,7 @@ class _LoginPage extends State<Login> {
       ),
     );
     var nom = '';
-    if (number == 1) {
+    if (userType == 1) {
       nom = 'Cliente';
     } else {
       nom = 'Vendedor';
