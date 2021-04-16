@@ -10,6 +10,7 @@ import 'package:shopalready/productos.dart';
 import 'package:shopalready/prueba.dart';
 import 'package:shopalready/recuperar.dart';
 import 'package:shopalready/registro.dart';
+import 'package:shopalready/vendedor_productos.dart';
 //import 'package:shopalready/tipos_usuarios.dart';
 
 class Login extends StatefulWidget {
@@ -28,10 +29,12 @@ class _LoginPage extends State<Login> {
     final form = formKey.currentState;
     if (form!.validate()) {
       form.save();
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Productos()),
       );
+
       return true;
     }
     return false;
@@ -57,6 +60,7 @@ class _LoginPage extends State<Login> {
   @override
   Widget build(BuildContext context) {
     var userType = ModalRoute.of(context)!.settings.arguments;
+
     final email = TextFormField(
       validator: (value) => (value) != null ? null : "Ingrese un correo valido",
       onSaved: (value) => _email = value!,
@@ -98,7 +102,18 @@ class _LoginPage extends State<Login> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          validateAndSubmit();
+          //validateAndSubmit();
+          if (userType == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Productos()),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => VendedorProductos()),
+            );
+          }
         },
         child: Text(
           AppLocalizations.of(context)!.iniSe,
@@ -111,11 +126,11 @@ class _LoginPage extends State<Login> {
     );
     var nom = '';
     if (userType == 1) {
-      nom = 'Cliente';
+      nom = AppLocalizations.of(context)!.cliente;
     } else {
-      nom = 'Vendedor';
+      nom = AppLocalizations.of(context)!.vendedor;
     }
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Material(
         child: Container(
             color: Colors.white,
@@ -123,21 +138,15 @@ class _LoginPage extends State<Login> {
             child: Form(
                 key: formKey,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/shopalready.png',
-                        height: size.height * 0.2,
-                      ),
-                      Text(
-                        'Bienvenido $nom',
-                        style: style.copyWith(
-                            fontWeight: FontWeight.bold, fontSize: 30.0),
-                      ),
-                    ],
+                  SizedBox(height: 60.0),
+
+                  Text(
+                    //'Bienvenido $nom',
+                    AppLocalizations.of(context)!.bienvenido + ' $nom',
+                    style: style.copyWith(
+                        fontWeight: FontWeight.bold, fontSize: 40.0),
                   ),
+
                   SizedBox(height: 45.0),
                   email,
                   SizedBox(height: 20.0),

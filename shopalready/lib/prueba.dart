@@ -19,7 +19,6 @@ class _PruebaState extends State<Prueba> {
     return SimpleDialog(
       title: Text(AppLocalizations.of(context)!.lenguaje),
       children: <Widget>[
-        Text(AppLocalizations.of(context)!.helloWorld),
         ListTile(
           title: Text(AppLocalizations.of(context)!.espanol),
           leading: Radio(

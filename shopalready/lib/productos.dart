@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shopalready/carrito.dart';
 import 'package:shopalready/diseño_productos.dart';
-import 'package:shopalready/login.dart';
+//import 'package:shopalready/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopalready/product.dart';
 import 'package:shopalready/prueba.dart';
+import 'package:shopalready/tipos_usuarios.dart';
 
 class Productos extends StatefulWidget {
   @override
@@ -44,7 +45,7 @@ class _ProductosState extends State<Productos> {
         print('salido');
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Login()),
+          MaterialPageRoute(builder: (context) => TiposDeUsuarios()),
         );
       },
     );

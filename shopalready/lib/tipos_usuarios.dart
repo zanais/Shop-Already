@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 import 'package:shopalready/prueba.dart';
 import 'login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TiposDeUsuarios extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _TiposDeUsuariosState extends State<TiposDeUsuarios> {
             //     context, MaterialPageRoute(builder: (context) => Login()));
           },
           child: Text(
-            'Cliente',
+            AppLocalizations.of(context)!.cliente,
             textAlign: TextAlign.center,
             style: style.copyWith(
               color: Colors.black,
@@ -52,7 +53,7 @@ class _TiposDeUsuariosState extends State<TiposDeUsuarios> {
             //     context, MaterialPageRoute(builder: (context) => Login()));
           },
           child: Text(
-            'Vendedor',
+            AppLocalizations.of(context)!.vendedor,
             textAlign: TextAlign.center,
             style: style.copyWith(
               color: Colors.black,
@@ -60,45 +61,47 @@ class _TiposDeUsuariosState extends State<TiposDeUsuarios> {
           ),
         ));
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
+    return new WillPopScope(
+        onWillPop: () async => false,
+        child: new Scaffold(
+            body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
-                'assets/shopalready.png',
-                height: size.height * 0.2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/shopalready.png',
+                    height: size.height * 0.2,
+                  ),
+                  Text(
+                    'ShopAlready',
+                    style: style.copyWith(
+                        fontWeight: FontWeight.bold, fontSize: 30.0),
+                  ),
+                ],
               ),
-              Text(
-                'ShopAlready',
-                style:
-                    style.copyWith(fontWeight: FontWeight.bold, fontSize: 30.0),
+              SizedBox(height: 50.0),
+              clienteButon,
+              SizedBox(height: 30.0),
+              vendedorButon,
+              SizedBox(height: 20.0),
+              IconButton(
+                icon: const Icon(Icons.language),
+                onPressed: () {
+                  //MyApp.cambiarIdioma(context, Locale('en', ''));
+                  //Navigator.push(context,
+                  //  MaterialPageRoute(builder: (context) => Prueba()));
+                  showDialog(
+                    context: context,
+                    builder: (_) => Prueba(),
+                  );
+                },
               ),
             ],
           ),
-          SizedBox(height: 50.0),
-          clienteButon,
-          SizedBox(height: 30.0),
-          vendedorButon,
-          SizedBox(height: 20.0),
-          IconButton(
-            icon: const Icon(Icons.language),
-            onPressed: () {
-              //MyApp.cambiarIdioma(context, Locale('en', ''));
-              //Navigator.push(context,
-              //  MaterialPageRoute(builder: (context) => Prueba()));
-              showDialog(
-                context: context,
-                builder: (_) => Prueba(),
-              );
-            },
-          ),
-        ],
-      ),
-    ));
+        )));
   }
 }

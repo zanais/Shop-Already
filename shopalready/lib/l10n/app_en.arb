@@ -8,7 +8,7 @@
   "busqueda":"Search",
   "email": "Email",
   "lenguaje":"Language",
-  "espanol":"Español",
+  "espanol":"Spanish",
   "ingles":"English",
   "aceptar":"Accept",
   "graciaspor":"Thank you for registering, an email was sent to confirm your account",
@@ -22,5 +22,8 @@
   "salir":"Exit",
   "cerrar":"Log out",
   "confirmar":"Confirm password",
-  "yatienes":"Do you have an account?"
+  "yatienes":"Do you have an account?",
+  "cliente": "Client",
+  "vendedor": "Seller",
+  "bienvenido": "Welcome"
 }
