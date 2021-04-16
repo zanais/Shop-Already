@@ -57,6 +57,7 @@ flutter:
   assets:
     - assets/shopalready.png
     - assets/agua.png
+    - assets/chetos.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

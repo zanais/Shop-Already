@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopalready/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:shopalready/manches.dart';
+//import 'package:shopalready/product.dart';
 import 'package:shopalready/productos.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

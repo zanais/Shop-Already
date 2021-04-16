@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+//import 'package:shopalready/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final int itemIndex;
-  ProductCard(this.itemIndex);
+  final String image, title;
+  final int price, cantidad;
+  ProductCard(
+      {required this.image,
+      required this.title,
+      required this.price,
+      required this.cantidad});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +40,11 @@ class ProductCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               height: 160,
               width: 200,
-              child: Image.asset(
-                'assets/agua.png',
+              child: Image(
+                  image: NetworkImage(
+                image,
                 //fit: BoxFit.cover,
-              ),
+              )),
             ),
           ),
           Positioned(
@@ -50,10 +57,11 @@ class ProductCard extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
+                    child: Text(title),
+                    /* Text(
                       'Agua',
                       style: Theme.of(context).textTheme.button,
-                    ),
+                    ),*/
                   ),
                 ],
               ),
@@ -70,7 +78,7 @@ class ProductCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      '\$15',
+                      price.toString(),
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),
@@ -89,7 +97,7 @@ class ProductCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'Cantidad: 5',
+                      'Cantidad: $cantidad',
                       style: Theme.of(context).textTheme.button,
                     ),
                   ),

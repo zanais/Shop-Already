@@ -3,11 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:shopalready/product.dart';
+//import 'package:shopalready/product.dart';
 //import 'package:shopalready/main.dart';
 import 'package:shopalready/productos.dart';
 import 'package:shopalready/prueba.dart';
 import 'package:shopalready/recuperar.dart';
 import 'package:shopalready/registro.dart';
+//import 'package:shopalready/tipos_usuarios.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -104,7 +107,12 @@ class _LoginPage extends State<Login> {
         ),
       ),
     );
-
+    var nom = '';
+    if (number == 1) {
+      nom = 'Cliente';
+    } else {
+      nom = 'Vendedor';
+    }
     Size size = MediaQuery.of(context).size;
     return Material(
         child: Container(
@@ -122,7 +130,7 @@ class _LoginPage extends State<Login> {
                         height: size.height * 0.2,
                       ),
                       Text(
-                        'ShopAlready',
+                        'Bienvenido $nom',
                         style: style.copyWith(
                             fontWeight: FontWeight.bold, fontSize: 30.0),
                       ),

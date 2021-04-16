@@ -4,6 +4,7 @@ import 'package:shopalready/diseño_productos.dart';
 import 'package:shopalready/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopalready/product.dart';
 import 'package:shopalready/prueba.dart';
 
 class Productos extends StatefulWidget {
@@ -14,6 +15,25 @@ class Productos extends StatefulWidget {
 class _ProductosState extends State<Productos> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
+
+  List<Product> products = [
+    Product(
+      // id: 1,
+      image:
+          'https://www.cheetos.com/sites/cheetos.com/files/2019-02/Cheetos%20Puffs_0.png',
+      title: 'Chetos',
+      price: 15,
+      cantidad: 4,
+    ),
+    Product(
+      // id: 2,
+      image:
+          'https://d29nyx213so7hn.cloudfront.net/media/catalog/product/cache/9376f1eb816eda0af02b0c0436fe42c0/7/5/750105531088_-_ciel_1lt_pet_4_1.png',
+      title: 'Agua',
+      price: 10,
+      cantidad: 16,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +138,13 @@ class _ProductosState extends State<Productos> {
                   child: Stack(
                 children: <Widget>[
                   ListView.builder(
-                    itemCount: 4,
-                    itemBuilder: (context, index) => ProductCard(index),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) => ProductCard(
+                      image: products[index].image,
+                      price: products[index].price,
+                      title: products[index].title,
+                      cantidad: products[index].cantidad,
+                    ),
                   )
                 ],
               ))
