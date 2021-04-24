@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopalready/login.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopalready/registrado.dart';
+import 'package:shopalready/login/login.dart';
+import 'package:shopalready/login/registrado.dart';
 
 // ignore: must_be_immutable
 class Registro extends StatefulWidget {
+  static const routeName = "registro";
   @override
   State<StatefulWidget> createState() => _RegistroPage();
 }
@@ -175,8 +175,8 @@ class _RegistroPage extends State<Registro> {
                               fontSize: 15.0),
                         ),
                         onTap: () {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => Login()));
+                          Navigator.pushReplacementNamed(
+                              context, Login.routeName);
                         },
                       ),
                     ],

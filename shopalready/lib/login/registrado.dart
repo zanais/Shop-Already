@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shopalready/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopalready/login/login.dart';
 
 class Registrado extends StatefulWidget {
+  static const routeName = "registrado";
   @override
   _RegistradoState createState() => _RegistradoState();
 }
@@ -19,8 +20,7 @@ class _RegistradoState extends State<Registrado> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Login()));
+          Navigator.pushNamed(context, Login.routeName);
         },
         child: Text(
           AppLocalizations.of(context)!.aceptar,

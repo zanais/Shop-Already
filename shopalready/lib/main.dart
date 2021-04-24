@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-//import 'package:shopalready/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-//import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopalready/tipos_usuarios.dart';
-import 'login.dart';
+//import 'package:shopalready/product.dart';
+import './screens/cliente/carrito.dart';
+import './screens/cliente/historial.dart';
+import './screens/cliente/productos.dart';
+import 'package:shopalready/login/login.dart';
+import 'package:shopalready/login/recuperar.dart';
+import 'package:shopalready/login/registrado.dart';
+import 'package:shopalready/login/registro.dart';
+import 'package:shopalready/login/renuevo.dart';
+import './screens/tipos_usuarios.dart';
+import './screens/vendedor/vendedor_productos.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +35,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale myLocale = Locale('es', '');
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,8 +44,21 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'Shop Already',
-      routes: {Login.routeName: (ctx) => Login()},
-      home: TiposDeUsuarios(),
+      initialRoute: '/',
+      routes: {
+        Login.routeName: (ctx) => Login(),
+        '/': (ctx) => TiposDeUsuarios(),
+        Carrito.routeName: (ctx) => Carrito(),
+        Productos.routeName: (ctx) => Productos(),
+        Historial.routeName: (ctx) => Historial(),
+        Recuperar.routeName: (ctx) => Recuperar(),
+        Registrado.routeName: (ctx) => Registrado(),
+        Registro.routeName: (ctx) => Registro(),
+        VendedorProductos.routeName: (ctx) => VendedorProductos(),
+        Renuevo.routeName: (ctx) => Renuevo(),
+      },
+
+      //home: TiposDeUsuarios(),
     );
   }
 }

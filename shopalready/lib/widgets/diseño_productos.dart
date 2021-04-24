@@ -1,22 +1,40 @@
 import 'package:flutter/material.dart';
+//import 'package:shopalready/cliente/productos.dart';
 //import 'package:shopalready/product.dart';
 
-class ProductCard extends StatelessWidget {
-  final String image, title;
+// ignore: must_be_immutable
+class ProductCard extends StatefulWidget {
+  final String image, title, id;
   final int price, cantidad;
-  ProductCard(
-      {required this.image,
-      required this.title,
-      required this.price,
-      required this.cantidad});
+
+  ProductCard({
+    required this.id,
+    required this.image,
+    required this.title,
+    required this.price,
+    required this.cantidad,
+  });
+
+  @override
+  _ProductCardState createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat');
+
+  Color _favIconColor = Colors.teal;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+    return Card(
+      margin: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      elevation: 4,
       //color: Colors.amber,
-      height: 160,
+      //height: 160,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
@@ -35,15 +53,14 @@ class ProductCard extends StatelessWidget {
           ),
           Positioned(
             top: 14,
-            right: 0,
+            right: -15,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               height: 160,
               width: 200,
               child: Image(
                   image: NetworkImage(
-                image,
-                //fit: BoxFit.cover,
+                widget.image,
               )),
             ),
           ),
@@ -57,18 +74,17 @@ class ProductCard extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(title),
-                    /* Text(
-                      'Agua',
-                      style: Theme.of(context).textTheme.button,
-                    ),*/
+                    child: Text(
+                      widget.title,
+                      style: style.copyWith(fontSize: 25),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           Positioned(
-            bottom: -20,
+            bottom: -30,
             left: 50,
             child: SizedBox(
               height: 136,
@@ -78,8 +94,8 @@ class ProductCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      price.toString(),
-                      style: Theme.of(context).textTheme.button,
+                      '\$' + widget.price.toString(),
+                      style: style.copyWith(fontSize: 25),
                     ),
                   ),
                 ],
@@ -87,7 +103,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: -40,
+            bottom: -60,
             left: 50,
             child: SizedBox(
               height: 136,
@@ -97,14 +113,49 @@ class ProductCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'Cantidad: $cantidad',
-                      style: Theme.of(context).textTheme.button,
+                      'Cantidad: ${widget.cantidad}',
+                      style: style.copyWith(fontSize: 20),
                     ),
                   ),
                 ],
               ),
             ),
           ),
+          IconButton(
+              icon: Icon(
+                Icons.shopping_bag,
+                size: 40,
+              ),
+              color: _favIconColor,
+              onPressed: () {
+                setState(() {
+                  if (_favIconColor == Colors.teal) {
+                    _favIconColor = Colors.red;
+                  } else {
+                    _favIconColor = Colors.teal;
+                  }
+                });
+              })
+          /*ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed)) return Colors.blue;
+                return Colors.yellow;
+              }),
+              alignment: Alignment.centerLeft,
+            ),
+            onPressed: () {
+              print("prsionado");
+            },
+            child: Text(
+              "Comprar",
+              style: style.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )*/
         ],
       ),
     );

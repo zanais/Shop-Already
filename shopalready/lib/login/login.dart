@@ -1,17 +1,11 @@
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:shopalready/product.dart';
-//import 'package:shopalready/product.dart';
-//import 'package:shopalready/main.dart';
-import 'package:shopalready/productos.dart';
-import 'package:shopalready/prueba.dart';
-import 'package:shopalready/recuperar.dart';
-import 'package:shopalready/registro.dart';
-import 'package:shopalready/vendedor_productos.dart';
-//import 'package:shopalready/tipos_usuarios.dart';
+import '../screens/cliente/productos.dart';
+import 'package:shopalready/login/recuperar.dart';
+import 'package:shopalready/login/registro.dart';
+import '../widgets/prueba.dart';
+import '../screens/vendedor/vendedor_productos.dart';
 
 class Login extends StatefulWidget {
   static const routeName = "login";
@@ -30,10 +24,7 @@ class _LoginPage extends State<Login> {
     if (form!.validate()) {
       form.save();
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Productos()),
-      );
+      Navigator.pushReplacementNamed(context, Productos.routeName);
 
       return true;
     }
@@ -104,15 +95,10 @@ class _LoginPage extends State<Login> {
         onPressed: () {
           //validateAndSubmit();
           if (userType == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Productos()),
-            );
+            Navigator.pushReplacementNamed(context, Productos.routeName);
           } else {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => VendedorProductos()),
-            );
+            Navigator.pushReplacementNamed(
+                context, VendedorProductos.routeName);
           }
         },
         child: Text(
@@ -130,23 +116,22 @@ class _LoginPage extends State<Login> {
     } else {
       nom = AppLocalizations.of(context)!.vendedor;
     }
+
     //Size size = MediaQuery.of(context).size;
     return Material(
         child: Container(
-            color: Colors.white,
+            color: userType == 1 ? Colors.white : Colors.red[200],
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Form(
                 key: formKey,
                 child: Column(children: <Widget>[
                   SizedBox(height: 60.0),
-
                   Text(
                     //'Bienvenido $nom',
                     AppLocalizations.of(context)!.bienvenido + ' $nom',
                     style: style.copyWith(
                         fontWeight: FontWeight.bold, fontSize: 40.0),
                   ),
-
                   SizedBox(height: 45.0),
                   email,
                   SizedBox(height: 20.0),
@@ -155,8 +140,7 @@ class _LoginPage extends State<Login> {
                   GestureDetector(
                     child: Text(AppLocalizations.of(context)!.olviContra),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Recuperar()));
+                      Navigator.pushNamed(context, Recuperar.routeName);
                     },
                   ),
                   SizedBox(height: 20.0),
@@ -172,10 +156,8 @@ class _LoginPage extends State<Login> {
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold)),
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Registro()));
+                          Navigator.pushReplacementNamed(
+                              context, Registro.routeName);
                         },
                       ),
                     ],
@@ -184,16 +166,12 @@ class _LoginPage extends State<Login> {
                   IconButton(
                     icon: const Icon(Icons.language),
                     onPressed: () {
-                      //MyApp.cambiarIdioma(context, Locale('en', ''));
-                      //Navigator.push(context,
-                      //  MaterialPageRoute(builder: (context) => Prueba()));
                       showDialog(
                         context: context,
                         builder: (_) => Prueba(),
                       );
                     },
                   ),
-                  //Prueba(radioValue: _radioValue),
                 ]))));
   }
 }

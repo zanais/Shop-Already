@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopalready/login.dart';
-import 'package:shopalready/prueba.dart';
-import 'login.dart';
+import '../widgets/prueba.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../login/login.dart';
 
 class TiposDeUsuarios extends StatefulWidget {
   @override

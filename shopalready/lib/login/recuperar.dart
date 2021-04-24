@@ -1,12 +1,11 @@
-// ignore: import_of_legacy_library_into_null_safe
-//import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopalready/renuevo.dart';
+import 'package:shopalready/login/renuevo.dart';
 
 // ignore: must_be_immutable
 class Recuperar extends StatefulWidget {
+  static const routeName = "recuperar";
   @override
   State<StatefulWidget> createState() => _Recuperarlo();
 }
@@ -19,10 +18,7 @@ class _Recuperarlo extends State<Recuperar> {
     final form = formKey.currentState;
     if (form!.validate()) {
       form.save();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Renuevo()),
-      );
+      Navigator.pushNamed(context, Renuevo.routeName);
       return true;
     }
     return false;
