@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopalready/providers/cart.dart';
 import 'package:shopalready/providers/product.dart';
 import 'package:shopalready/screens/cliente/carrito.dart';
+import 'package:shopalready/widgets/badge.dart';
 import '../../widgets/diseño_productos.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/drawer.dart';
@@ -42,14 +44,18 @@ class _ProductosState extends State<Productos> {
               backgroundColor: Colors.teal[100],
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
-                IconButton(
-                    icon: Icon(
-                      Icons.shopping_bag,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Carrito.routeName);
-                    })
+                Consumer<Cart>(
+                  builder: (_, cart, child) => Badge(
+                      child: IconButton(
+                          icon: Icon(
+                            Icons.shopping_bag,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, Carrito.routeName);
+                          }),
+                      value: cart.itemCount.toString(),
+                      color: Colors.amber),
+                )
               ],
             ),
             backgroundColor: Colors.white,

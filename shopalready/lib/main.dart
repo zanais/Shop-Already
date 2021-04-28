@@ -17,6 +17,7 @@ import './screens/vendedor/vendedor_productos.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/cart.dart';
+import 'providers/orders.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (ctx) => ProductProvider()),
         ChangeNotifierProvider(create: (ctx) => Cart()),
+        ChangeNotifierProvider(create: (ctx) => Orders()),
       ],
       child: MaterialApp(
         locale: myLocale,
