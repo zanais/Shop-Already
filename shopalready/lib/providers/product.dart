@@ -1,7 +1,6 @@
-//import 'package:flutter/material.dart';
-//import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 
-class Product {
+class Product with ChangeNotifier {
   final String image, title, id;
   final int price, cantidad;
 

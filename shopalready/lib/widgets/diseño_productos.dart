@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-//import 'package:shopalready/cliente/productos.dart';
-//import 'package:shopalready/product.dart';
+import 'package:provider/provider.dart';
+import 'package:shopalready/providers/cart.dart';
+//import 'package:shopalready/providers/products_provider.dart';
+//import '../screens/cliente/productos.dart';
+import '../providers/product.dart';
 
-// ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
-  final String image, title, id;
-  final int price, cantidad;
-
-  ProductCard({
-    required this.id,
-    required this.image,
-    required this.title,
-    required this.price,
-    required this.cantidad,
-  });
-
   @override
   _ProductCardState createState() => _ProductCardState();
 }
@@ -22,10 +13,10 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
 
-  Color _favIconColor = Colors.teal;
-
   @override
   Widget build(BuildContext context) {
+    final productos = Provider.of<Product>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Card(
       margin: EdgeInsets.all(10),
@@ -60,7 +51,7 @@ class _ProductCardState extends State<ProductCard> {
               width: 200,
               child: Image(
                   image: NetworkImage(
-                widget.image,
+                productos.image,
               )),
             ),
           ),
@@ -75,7 +66,7 @@ class _ProductCardState extends State<ProductCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      widget.title,
+                      productos.title,
                       style: style.copyWith(fontSize: 25),
                     ),
                   ),
@@ -94,7 +85,7 @@ class _ProductCardState extends State<ProductCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      '\$' + widget.price.toString(),
+                      '\$' + productos.price.toString(),
                       style: style.copyWith(fontSize: 25),
                     ),
                   ),
@@ -113,7 +104,7 @@ class _ProductCardState extends State<ProductCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'Cantidad: ${widget.cantidad}',
+                      'Cantidad: ${productos.cantidad}',
                       style: style.copyWith(fontSize: 20),
                     ),
                   ),
@@ -126,15 +117,8 @@ class _ProductCardState extends State<ProductCard> {
                 Icons.shopping_bag,
                 size: 40,
               ),
-              color: _favIconColor,
               onPressed: () {
-                setState(() {
-                  if (_favIconColor == Colors.teal) {
-                    _favIconColor = Colors.red;
-                  } else {
-                    _favIconColor = Colors.teal;
-                  }
-                });
+                cart.addItem(productos.id, productos.price, productos.title);
               })
           /*ElevatedButton(
             style: ButtonStyle(

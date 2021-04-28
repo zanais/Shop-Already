@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopalready/providers/product.dart';
 import 'package:shopalready/screens/cliente/carrito.dart';
 import '../../widgets/diseño_productos.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/drawer.dart';
-import 'package:shopalready/product.dart';
+import '../../providers/products_provider.dart';
 
 class Productos extends StatefulWidget {
   static const routeName = "productos";
@@ -13,42 +15,20 @@ class Productos extends StatefulWidget {
 }
 
 class _ProductosState extends State<Productos> {
-  List<Product> products = [
-    Product(
-      id: '1',
-      image:
-          'https://www.cheetos.com/sites/cheetos.com/files/2019-02/Cheetos%20Puffs_0.png',
-      title: 'Chetos',
-      price: 15,
-      cantidad: 4,
-    ),
-    Product(
-      id: '2',
-      image:
-          'https://d29nyx213so7hn.cloudfront.net/media/catalog/product/cache/9376f1eb816eda0af02b0c0436fe42c0/7/5/750105531088_-_ciel_1lt_pet_4_1.png',
-      title: 'Agua',
-      price: 10,
-      cantidad: 16,
-    ),
-    Product(
-      id: '3',
-      image: 'http://assets.stickpng.com/thumbs/580b57fbd9996e24bc43c0de.png',
-      title: 'Coca-Cola',
-      price: 20,
-      cantidad: 5,
-    ),
-  ];
-
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
+  //busqueda [AREGLAR]
   List<Product> listafiltrada = [];
   @override
-  void didChangeDependencies() {
-    listafiltrada = [...products];
+  /*void didChangeDependencies() {
+    listafiltrada = [productsData];
     super.didChangeDependencies();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<ProductProvider>(context);
+    final products = productsData.items;
+
     return new WillPopScope(
         onWillPop: () async => false,
         child: new Scaffold(
@@ -116,13 +96,16 @@ class _ProductosState extends State<Productos> {
                   child: Stack(
                 children: <Widget>[
                   ListView.builder(
-                    itemCount: listafiltrada.length,
-                    itemBuilder: (ctx, index) => ProductCard(
-                      id: listafiltrada[index].id,
-                      image: listafiltrada[index].image,
-                      price: listafiltrada[index].price,
-                      title: listafiltrada[index].title,
-                      cantidad: listafiltrada[index].cantidad,
+                    itemCount: products.length,
+                    itemBuilder: (ctx, index) => ChangeNotifierProvider(
+                      create: (c) => products[index],
+                      child: ProductCard(
+                          //id: products[index].id,
+                          //image: products[index].image,
+                          //price: products[index].price,
+                          //title: products[index].title,
+                          //cantidad: products[index].cantidad,
+                          ),
                     ),
                   )
                 ],
