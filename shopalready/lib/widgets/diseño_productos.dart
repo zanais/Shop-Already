@@ -11,6 +11,7 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  var _shop = false;
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
 
   @override
@@ -114,10 +115,12 @@ class _ProductCardState extends State<ProductCard> {
           ),
           IconButton(
               icon: Icon(
-                Icons.shopping_bag,
-                size: 40,
-              ),
+                  _shop ? Icons.shopping_bag : Icons.shopping_bag_outlined,
+                  size: 40),
               onPressed: () {
+                setState(() {
+                  _shop = !_shop;
+                });
                 cart.addItem(productos.id, productos.price, productos.title);
               })
           /*ElevatedButton(

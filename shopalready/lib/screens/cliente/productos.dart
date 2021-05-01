@@ -54,7 +54,7 @@ class _ProductosState extends State<Productos> {
                             Navigator.pushNamed(context, Carrito.routeName);
                           }),
                       value: cart.itemCount.toString(),
-                      color: Colors.amber),
+                      color: Colors.red),
                 )
               ],
             ),

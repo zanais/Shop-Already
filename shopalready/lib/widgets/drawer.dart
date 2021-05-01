@@ -52,7 +52,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               if (this.currentPage == "Productos") return;
 
-              Navigator.pushNamed(context, Productos.routeName);
+              Navigator.pushReplacementNamed(context, Productos.routeName);
             },
           ),
           ListTile(
@@ -62,7 +62,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               if (this.currentPage == "Carrito") return;
 
-              Navigator.pushNamed(context, Carrito.routeName);
+              Navigator.pushReplacementNamed(context, Carrito.routeName);
             },
           ),
           ListTile(
@@ -72,7 +72,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               if (this.currentPage == "Historial") return;
 
-              Navigator.pushNamed(context, Historial.routeName);
+              Navigator.pushReplacementNamed(context, Historial.routeName);
             },
           ),
           ListTile(

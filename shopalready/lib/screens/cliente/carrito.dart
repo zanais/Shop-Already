@@ -36,14 +36,12 @@ class _ProductosState extends State<Carrito> {
               Consumer<Cart>(
                 builder: (_, cart, child) => Badge(
                     child: IconButton(
-                        icon: Icon(
-                          Icons.shopping_bag,
-                        ),
+                        icon: Icon(Icons.shopping_bag),
                         onPressed: () {
                           Navigator.pushNamed(context, Carrito.routeName);
                         }),
                     value: cart.itemCount.toString(),
-                    color: Colors.amber),
+                    color: Colors.red),
               )
             ],
           ),
