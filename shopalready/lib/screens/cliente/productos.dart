@@ -18,13 +18,27 @@ class Productos extends StatefulWidget {
 
 class _ProductosState extends State<Productos> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
+  var _isInit = true;
+  var _isLoading = false;
   //busqueda [AREGLAR]
   List<Product> listafiltrada = [];
   @override
-  /*void didChangeDependencies() {
-    listafiltrada = [productsData];
+  void didChangeDependencies() {
+    //listafiltrada = [productsData];
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProductProvider>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+
+    _isInit = false;
     super.didChangeDependencies();
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,60 +76,64 @@ class _ProductosState extends State<Productos> {
             drawer: MyDrawer(
               "Productos",
             ),
-            body: Column(children: <Widget>[
-              Container(
-                  margin: EdgeInsets.all(10.0),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                  decoration: BoxDecoration(
-                      color: Colors.teal[100],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: TextField(
-                      onChanged: (palabras) {
-                        setState(() {
-                          if (palabras.isNotEmpty) {
-                            listafiltrada = products
-                                .where((products) => products.title
-                                    .toLowerCase()
-                                    .contains(palabras.toLowerCase()))
-                                .toList();
-                            listafiltrada.forEach((element) {
-                              print(element.title);
-                            });
-                          } else {
-                            listafiltrada = [...products];
-                          }
-                        });
-                      },
-                      style: style.copyWith(color: Colors.black),
-                      decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.black,
-                        ),
-                        hintText: AppLocalizations.of(context)!.busqueda,
-                        hintStyle: TextStyle(color: Colors.black),
-                      ))),
-              Expanded(
-                  child: Stack(
-                children: <Widget>[
-                  ListView.builder(
-                    itemCount: products.length,
-                    itemBuilder: (ctx, index) => ChangeNotifierProvider(
-                      create: (c) => products[index],
-                      child: ProductCard(
-                          //id: products[index].id,
-                          //image: products[index].image,
-                          //price: products[index].price,
-                          //title: products[index].title,
-                          //cantidad: products[index].cantidad,
-                          ),
-                    ),
+            body: _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
-                ],
-              ))
-            ])));
+                : Column(children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 8.0),
+                        decoration: BoxDecoration(
+                            color: Colors.teal[100],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: TextField(
+                            onChanged: (palabras) {
+                              setState(() {
+                                if (palabras.isNotEmpty) {
+                                  listafiltrada = products
+                                      .where((products) => products.title
+                                          .toLowerCase()
+                                          .contains(palabras.toLowerCase()))
+                                      .toList();
+                                  listafiltrada.forEach((element) {
+                                    print(element.title);
+                                  });
+                                } else {
+                                  listafiltrada = [...products];
+                                }
+                              });
+                            },
+                            style: style.copyWith(color: Colors.black),
+                            decoration: InputDecoration(
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                              hintText: AppLocalizations.of(context)!.busqueda,
+                              hintStyle: TextStyle(color: Colors.black),
+                            ))),
+                    Expanded(
+                        child: Stack(
+                      children: <Widget>[
+                        ListView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (ctx, index) => ChangeNotifierProvider(
+                            create: (c) => products[index],
+                            child: ProductCard(
+                                //id: products[index].id,
+                                //image: products[index].image,
+                                //price: products[index].price,
+                                //title: products[index].title,
+                                //cantidad: products[index].cantidad,
+                                ),
+                          ),
+                        )
+                      ],
+                    ))
+                  ])));
   }
 }

@@ -16,6 +16,7 @@ class Carrito extends StatefulWidget {
 
 class _ProductosState extends State<Carrito> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
+  var _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
@@ -59,16 +60,28 @@ class _ProductosState extends State<Carrito> {
                       Text('Total', style: TextStyle(fontSize: 20)),
                       Spacer(),
                       Chip(
-                        label: Text('\$${cart.totalAmount.toString()}'),
+                        label: Text('\$${cart.totalAmount.toString()} MXN'),
                         backgroundColor: Colors.teal[200],
                       ),
                       TextButton(
-                        child: Text('COMPRAR'),
-                        onPressed: () {
-                          Provider.of<Orders>(context, listen: false).addOrder(
-                              cart.items.values.toList(), cart.totalAmount);
-                          cart.clear();
-                        },
+                        child: _isLoading
+                            ? CircularProgressIndicator()
+                            : Text('COMPRAR'),
+                        onPressed: (cart.totalAmount <= 0 || _isLoading)
+                            ? null
+                            : () async {
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                await Provider.of<Orders>(context,
+                                        listen: false)
+                                    .addOrder(cart.items.values.toList(),
+                                        cart.totalAmount);
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                                cart.clear();
+                              },
                       ),
                     ],
                   ),

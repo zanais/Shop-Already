@@ -11,7 +11,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  var _shop = false;
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
 
   @override
@@ -86,7 +85,7 @@ class _ProductCardState extends State<ProductCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      '\$' + productos.price.toString(),
+                      '\$' + productos.price.toString() + ' MXN',
                       style: style.copyWith(fontSize: 25),
                     ),
                   ),
@@ -114,15 +113,25 @@ class _ProductCardState extends State<ProductCard> {
             ),
           ),
           IconButton(
-              icon: Icon(
-                  _shop ? Icons.shopping_bag : Icons.shopping_bag_outlined,
-                  size: 40),
-              onPressed: () {
-                setState(() {
-                  _shop = !_shop;
-                });
-                cart.addItem(productos.id, productos.price, productos.title);
-              })
+            icon: Icon(Icons.shopping_bag, size: 40),
+            onPressed: () {
+              cart.addItem(productos.id, productos.price, productos.title);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Se sgregó el producto al carrito'),
+                  duration: Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'deshacer',
+                    onPressed: () {
+                      cart.removeSingleItem(productos.id);
+                    },
+                  ),
+                ),
+              );
+            },
+            color: Colors.teal,
+          )
           /*ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith<Color>(

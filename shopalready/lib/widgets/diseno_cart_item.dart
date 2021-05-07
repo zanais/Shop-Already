@@ -6,7 +6,7 @@ class CartItem extends StatelessWidget {
   final String id;
   final String productId;
   final int price;
-  final int cantidad;
+  int cantidad;
   final String title;
 
   CartItem(
@@ -19,6 +19,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context, listen: false);
     return Dismissible(
       key: ValueKey(id),
       background: Container(
@@ -48,16 +49,43 @@ class CartItem extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.all(8),
-          child: ListTile(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(title, style: TextStyle(fontSize: 25)),
+                  Text('Total: \$${price * cantidad} MXN',
+                      style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              IconButton(
+                  icon: Icon(Icons.arrow_left, size: 40),
+                  onPressed: () {
+                    cart.removeSingleItem(productId);
+                  }),
+              Text(
+                '$cantidad',
+                style: TextStyle(fontSize: 20),
+              ),
+              IconButton(
+                  icon: Icon(Icons.arrow_right, size: 40),
+                  onPressed: () {
+                    cart.addItem(productId, price, title);
+                  }),
+            ],
+          ),
+          /*ListTile(
             leading: CircleAvatar(
               child: FittedBox(
                 child: Text('\$$price'),
               ),
             ),
             title: Text(title),
-            subtitle: Text('Total: \$${price * cantidad}'),
+            subtitle: Text('Total: \$${price * cantidad} MXN'),
             trailing: Text('$cantidad x'),
-          ),
+            
+          ),*/
         ),
       ),
     );
