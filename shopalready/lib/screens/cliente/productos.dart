@@ -20,6 +20,7 @@ class _ProductosState extends State<Productos> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   var _isInit = true;
   var _isLoading = false;
+
   //busqueda [AREGLAR]
   List<Product> listafiltrada = [];
   @override

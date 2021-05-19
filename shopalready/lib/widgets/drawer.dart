@@ -5,21 +5,22 @@ import '../screens/cliente/historial.dart';
 import '../screens/cliente/productos.dart';
 import '../widgets/prueba.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 
 class MyDrawer extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final user = FirebaseAuth.instance.currentUser;
-  MyDrawer(this.currentPage);
 
+  MyDrawer(this.currentPage);
   final String currentPage;
 
   @override
   Widget build(BuildContext context) {
+    final email = Provider.of<Auth>(context, listen: false);
     Widget salirButton = TextButton(
       child: Text(AppLocalizations.of(context)!.salir),
       onPressed: () {
         _auth.signOut();
-        print('salido');
         Navigator.pushReplacementNamed(context, '/');
       },
     );
@@ -38,8 +39,8 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('Usuario'),
-            accountEmail: Text('@User'),
+            accountName: Text('Cliente'),
+            accountEmail: Text(email.emailId),
             decoration: BoxDecoration(
               color: Colors.red[200],
             ),

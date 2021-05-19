@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+//import 'package:shopalready/providers/product.dart';
+//import 'package:shopalready/providers/products_provider.dart';
 //import 'package:shopalready/providers/cart.dart';
 //import 'package:shopalready/widgets/badge.dart';
 import '../../widgets/drawer.dart';
@@ -17,7 +19,7 @@ class Historial extends StatefulWidget {
 class _HistorialState extends State<Historial> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   var _isLoading = false;
-
+  //String query = '';
   @override
   void initState() {
     _isLoading = true;
@@ -34,26 +36,29 @@ class _HistorialState extends State<Historial> {
   @override
   Widget build(BuildContext context) {
     final ordersData = Provider.of<Orders>(context);
+    //final nombre = Provider.of<ProductProvider>(context, listen: false);
     return new WillPopScope(
-      onWillPop: () async => false,
-      child: new Scaffold(
+        onWillPop: () async => false,
+        child: new Scaffold(
           appBar: AppBar(
-              title: Text(
-                'Historial',
-                //AppLocalizations.of(context)!.carrito,
-                style: style.copyWith(
-                  color: Colors.black,
-                ),
+            title: Text(
+              'Historial',
+              //AppLocalizations.of(context)!.carrito,
+              style: style.copyWith(
+                color: Colors.black,
               ),
-              backgroundColor: Colors.teal[100],
-              iconTheme: IconThemeData(color: Colors.black),
-              actions: <Widget>[
-                IconButton(
-                    icon: Icon(
-                      Icons.search,
-                    ),
-                    onPressed: () {}),
-              ]),
+            ),
+            backgroundColor: Colors.teal[100],
+            iconTheme: IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.search,
+                ),
+              )
+            ],
+          ),
           backgroundColor: Colors.white,
           drawer: MyDrawer("Historial"),
           body: _isLoading
@@ -63,7 +68,7 @@ class _HistorialState extends State<Historial> {
               : ListView.builder(
                   itemCount: ordersData.orders.length,
                   itemBuilder: (ctx, i) => OrderItem(ordersData.orders[i]),
-                )),
-    );
+                ),
+        ));
   }
 }

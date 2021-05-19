@@ -15,12 +15,27 @@ class Carrito extends StatefulWidget {
 }
 
 class _ProductosState extends State<Carrito> {
+  //final GlobalKey<FormState> _formKey = GlobalKey();
+  //TextEditingController controlador = TextEditingController();
+
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   var _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+
     //Size size = MediaQuery.of(context).size;
+    final direccion = TextFormField(
+      onFieldSubmitted: (value) {},
+      //controller: controlador,
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.article),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: 'Dirección',
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))),
+    );
     return new WillPopScope(
       onWillPop: () async => false,
       child: new Scaffold(
@@ -50,6 +65,21 @@ class _ProductosState extends State<Carrito> {
           drawer: MyDrawer("Carrito"),
           body: Column(
             children: <Widget>[
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: cart.itemCount,
+                    itemBuilder: (ctx, i) => CartItem(
+                          cart.items.values.toList()[i].id,
+                          cart.items.keys.toList()[i],
+                          cart.items.values.toList()[i].price,
+                          cart.items.values.toList()[i].cantidad,
+                          cart.items.values.toList()[i].title,
+                        )),
+              ),
+              direccion,
               Card(
                 margin: EdgeInsets.all(15),
                 child: Padding(
@@ -90,7 +120,7 @@ class _ProductosState extends State<Carrito> {
               SizedBox(
                 height: 10,
               ),
-              Expanded(
+              /*Expanded(
                 child: ListView.builder(
                     itemCount: cart.itemCount,
                     itemBuilder: (ctx, i) => CartItem(
@@ -100,7 +130,7 @@ class _ProductosState extends State<Carrito> {
                           cart.items.values.toList()[i].cantidad,
                           cart.items.values.toList()[i].title,
                         )),
-              ),
+              ),*/
             ],
           )),
     );

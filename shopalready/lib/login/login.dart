@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:shopalready/providers/auth.dart';
+import '../http_exceptions.dart';
 import '../screens/cliente/productos.dart';
 import 'package:shopalready/login/recuperar.dart';
 import 'package:shopalready/login/registro.dart';
@@ -14,47 +16,78 @@ class Login extends StatefulWidget {
 }
 
 class _LoginPage extends State<Login> {
-  final formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
 
-  late String _email;
-  late String _password;
-
-  bool validateAndSave() {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-
-      Navigator.pushReplacementNamed(context, Productos.routeName);
-
-      return true;
-    }
-    return false;
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('Ocurrió un error'),
+              content: Text(message),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Aceptar'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ));
   }
 
-  void validateAndSubmit() async {
-    if (validateAndSave()) {
-      try {
-        // ignore: unused_local_variable
-        final UserCredential user = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          print('No user found for that email.');
-        } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
-        }
+  Future<void> _submit(int userType) async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    _formKey.currentState!.save();
+    try {
+      await Provider.of<Auth>(context, listen: false).login(
+        _authData['email']!,
+        _authData['password']!,
+      );
+    } on HttpException catch (error) {
+      var errorMessage = 'Autenticación falló';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'La cuenta actualmente existe';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'El email no es valido';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'Contraseña muy débil';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'No se pudo encontrar a un usuario con ese email';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Contraseña invalida';
       }
+      _showErrorDialog(errorMessage);
+    } catch (eror) {
+      const errorMessage = 'No se pudo autenticar. Intente más tarde';
+      _showErrorDialog(errorMessage);
+    }
+    if (userType == 1) {
+      Navigator.pushReplacementNamed(context, Productos.routeName);
+    } else {
+      Navigator.pushReplacementNamed(context, VendedorProductos.routeName);
     }
   }
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   @override
   Widget build(BuildContext context) {
-    var userType = ModalRoute.of(context)!.settings.arguments;
+    int userType = ModalRoute.of(context)!.settings.arguments as int;
 
     final email = TextFormField(
-      validator: (value) => (value) != null ? null : "Ingrese un correo valido",
-      onSaved: (value) => _email = value!,
+      validator: (value) {
+        if (value!.isEmpty || !value.contains('@')) {
+          return 'Invalid email';
+        }
+      },
+      onSaved: (value) {
+        _authData['email'] = value!;
+      },
       keyboardType: TextInputType.emailAddress,
       obscureText: false,
       style: style,
@@ -70,9 +103,10 @@ class _LoginPage extends State<Login> {
         if (value!.isEmpty) {
           return 'Ingresar contraseña';
         }
-        return null;
       },
-      onSaved: (value) => _password = value!,
+      onSaved: (value) {
+        _authData['password'] = value!;
+      },
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -92,14 +126,8 @@ class _LoginPage extends State<Login> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          //validateAndSubmit();
-          if (userType == 1) {
-            Navigator.pushReplacementNamed(context, Productos.routeName);
-          } else {
-            Navigator.pushReplacementNamed(
-                context, VendedorProductos.routeName);
-          }
+        onPressed: () async {
+          await _submit(userType);
         },
         child: Text(
           AppLocalizations.of(context)!.iniSe,
@@ -123,7 +151,7 @@ class _LoginPage extends State<Login> {
             color: userType == 1 ? Colors.white : Colors.red[200],
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Form(
-                key: formKey,
+                key: _formKey,
                 child: Column(children: <Widget>[
                   SizedBox(height: 60.0),
                   Text(

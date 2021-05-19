@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopalready/login/login.dart';
 
 class Registrado extends StatefulWidget {
   static const routeName = "registrado";
@@ -20,7 +19,7 @@ class _RegistradoState extends State<Registrado> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.pushNamed(context, Login.routeName);
+          Navigator.pushReplacementNamed(context, '/');
         },
         child: Text(
           AppLocalizations.of(context)!.aceptar,

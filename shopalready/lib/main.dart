@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopalready/providers/products_provider.dart';
-//import 'package:shopalready/product.dart';
 import './screens/cliente/carrito.dart';
 import './screens/cliente/historial.dart';
 import './screens/cliente/productos.dart';
@@ -13,9 +12,8 @@ import 'package:shopalready/login/registro.dart';
 import 'package:shopalready/login/renuevo.dart';
 import './screens/tipos_usuarios.dart';
 import './screens/vendedor/vendedor_productos.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
-
+import './providers/auth.dart';
 import 'providers/cart.dart';
 import 'providers/orders.dart';
 
@@ -46,9 +44,23 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx) => ProductProvider()),
+        ChangeNotifierProvider(create: (ctx) => Auth()),
+        ChangeNotifierProxyProvider<Auth, ProductProvider>(
+          create: (_) => ProductProvider('', []),
+          update: (ctx, auth, previousProducts) => ProductProvider(
+            auth.token,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
+        ),
         ChangeNotifierProvider(create: (ctx) => Cart()),
-        ChangeNotifierProvider(create: (ctx) => Orders()),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: (ctx) => Orders('', '', []),
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token,
+            auth.userId,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
+        ),
       ],
       child: MaterialApp(
         locale: myLocale,
@@ -69,9 +81,9 @@ class _MyAppState extends State<MyApp> {
           VendedorProductos.routeName: (ctx) => VendedorProductos(),
           Renuevo.routeName: (ctx) => Renuevo(),
         },
-
-        //home: TiposDeUsuarios(),
-      ),
+      )
+      //home: TiposDeUsuarios(),
+      ,
     );
   }
 }

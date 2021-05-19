@@ -119,7 +119,7 @@ class _ProductCardState extends State<ProductCard> {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Se sgregó el producto al carrito'),
+                  content: Text('Se agregó el producto al carrito'),
                   duration: Duration(seconds: 2),
                   action: SnackBarAction(
                     label: 'deshacer',

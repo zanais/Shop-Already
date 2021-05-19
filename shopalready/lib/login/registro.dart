@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopalready/login/login.dart';
+import 'package:provider/provider.dart';
+import 'package:shopalready/http_exceptions.dart';
 import 'package:shopalready/login/registrado.dart';
+import 'package:shopalready/providers/auth.dart';
 
-// ignore: must_be_immutable
 class Registro extends StatefulWidget {
   static const routeName = "registro";
   @override
@@ -12,40 +13,61 @@ class Registro extends StatefulWidget {
 }
 
 class _RegistroPage extends State<Registro> {
-  final formKey = new GlobalKey<FormState>();
-  var confirmPass;
-  late String _email;
-  late String _password;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  Map<String, String> _authData = {
+    'nombre': '',
+    'email': '',
+    'password': '',
+  };
+  final _passwordController = TextEditingController();
 
-  bool validateAndSave() {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => Registrado()));
-      return true;
-    }
-    return false;
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('Ocurrió un error'),
+              content: Text(message),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Aceptar'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ));
   }
 
-  void validateAndSubmit() async {
-    if (validateAndSave()) {
-      // ignore: unused_local_variable
-      final UserCredential user = await FirebaseAuth.instance
-          // ignore: missing_return
-          .createUserWithEmailAndPassword(email: _email, password: _password)
-          // ignore: missing_return
-          .then((user) {
-        try {
-          FirebaseAuth.instance.currentUser!.sendEmailVerification();
-          //Navigator.pop(context);
-
-        } catch (e) {
-          print(e);
-        }
-        return user;
-      });
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
     }
+    try {
+      await Provider.of<Auth>(context, listen: false).singup(
+        _authData['nombre']!,
+        _authData['email']!,
+        _authData['password']!,
+      );
+      Navigator.pushReplacementNamed(context, Registrado.routeName);
+    } on HttpException catch (error) {
+      var errorMessage = 'Autenticación falló';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'La cuenta actualmente existe';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'El email no es valido';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'Contraseña muy débil';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'No se pudo encontrar a un usuario con ese email';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Contraseña invalida';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (eror) {
+      const errorMessage = 'No se pudo autenticar. Intente más tarde';
+      _showErrorDialog(errorMessage);
+    }
+    _formKey.currentState!.save();
   }
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
@@ -53,9 +75,14 @@ class _RegistroPage extends State<Registro> {
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
     final email = TextFormField(
-      /*validator: (value) =>
-          EmailValidator.validate(value) ? null : "Ingrese un correo valido",*/
-      onSaved: (value) => _email = value!,
+      validator: (value) {
+        if (value!.isEmpty || !value.contains('@')) {
+          return 'Invalid email';
+        }
+      },
+      onSaved: (value) {
+        _authData['email'] = value!;
+      },
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -70,13 +97,14 @@ class _RegistroPage extends State<Registro> {
     );
     final password = TextFormField(
       validator: (value) {
-        confirmPass = value;
-        if (value!.isEmpty) {
-          return 'Ingresar contraseña';
+        if (value!.isEmpty || value.length < 5) {
+          return 'Contraseña muy corta';
         }
-        return null;
       },
-      onSaved: (value) => _password = value!,
+      onSaved: (value) {
+        _authData['password'] = value!;
+      },
+      controller: _passwordController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -91,13 +119,9 @@ class _RegistroPage extends State<Registro> {
     );
     final password2 = TextFormField(
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Ingresar contraseña';
+        if (value != _passwordController.text) {
+          return 'No coinciden';
         }
-        if (value != confirmPass) {
-          return 'Las contraseñas no coinciden';
-        }
-        return null;
       },
       obscureText: true,
       style: style,
@@ -119,7 +143,7 @@ class _RegistroPage extends State<Registro> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          validateAndSubmit();
+          _submit();
         },
         child: Text(
           AppLocalizations.of(context)!.registrate,
@@ -130,6 +154,23 @@ class _RegistroPage extends State<Registro> {
         ),
       ),
     );
+    final nombreButon = TextFormField(
+      //validator: (value) {},
+      onSaved: (value) {
+        _authData['nombre'] = value!;
+      },
+      //obscureText: true,
+      style: style,
+      decoration: InputDecoration(
+        prefixIcon: Icon(
+          Icons.contacts,
+          color: Colors.black,
+        ),
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'nombre',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -137,51 +178,56 @@ class _RegistroPage extends State<Registro> {
           color: Colors.white,
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Form(
-            key: formKey,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 35.0),
-                  Text(AppLocalizations.of(context)!.registrate,
-                      style: style.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 35.0)),
-                  SizedBox(height: 70.0),
-                  email,
-                  SizedBox(height: 20.0),
-                  password,
-                  SizedBox(height: 20.0),
-                  password2,
-                  SizedBox(height: 20.0),
-                  registroButon,
-                  SizedBox(height: 40.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(
-                        AppLocalizations.of(context)!.yatienes,
+            key: _formKey,
+            child: InkWell(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 35.0),
+                    Text(AppLocalizations.of(context)!.registrate,
                         style: style.copyWith(
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          AppLocalizations.of(context)!.iniSe,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35.0)),
+                    SizedBox(height: 70.0),
+                    nombreButon,
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    email,
+                    SizedBox(height: 20.0),
+                    password,
+                    SizedBox(height: 20.0),
+                    password2,
+                    SizedBox(height: 20.0),
+                    registroButon,
+                    SizedBox(height: 40.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text(
+                          AppLocalizations.of(context)!.yatienes,
                           style: style.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0),
+                            fontSize: 15.0,
+                          ),
                         ),
-                        onTap: () {
-                          Navigator.pushReplacementNamed(
-                              context, Login.routeName);
-                        },
-                      ),
-                    ],
-                  )
-                ]),
+                        GestureDetector(
+                          child: Text(
+                            AppLocalizations.of(context)!.iniSe,
+                            style: style.copyWith(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.0),
+                          ),
+                          onTap: () {
+                            Navigator.pushReplacementNamed(context, '/');
+                          },
+                        ),
+                      ],
+                    )
+                  ]),
+            ),
           ),
         )));
   }
