@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../providers/orders.dart' show Orders;
 import 'package:provider/provider.dart';
-import '../../widgets/historial_item.dart';
-import 'drawer.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopalready/widgets/vendedor_diseno_ordenes.dart';
+import 'vendedor_drawer.dart';
+//import '../../providers/orders.dart' show Orders;
+import '../../providers/order_vendedor.dart' show OrdersVendedor;
 
-class Historial extends StatefulWidget {
-  static const routeName = "historial";
+class VendedorHistorial extends StatefulWidget {
+  static const routeName = "vendedor_historial";
   @override
-  _HistorialState createState() => _HistorialState();
+  _VendedorHistorialState createState() => _VendedorHistorialState();
 }
 
-class _HistorialState extends State<Historial> {
+class _VendedorHistorialState extends State<VendedorHistorial> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   var _isLoading = false;
   //String query = '';
@@ -19,7 +19,9 @@ class _HistorialState extends State<Historial> {
   void initState() {
     _isLoading = true;
 
-    Provider.of<Orders>(context, listen: false).fetchAndSetOrders().then((_) {
+    Provider.of<OrdersVendedor>(context, listen: false)
+        .fetchAndSetOrdersVendedor()
+        .then((_) {
       setState(() {
         _isLoading = false;
       });
@@ -30,14 +32,14 @@ class _HistorialState extends State<Historial> {
 
   @override
   Widget build(BuildContext context) {
-    final ordersData = Provider.of<Orders>(context);
+    final ordersData = Provider.of<OrdersVendedor>(context);
     //final nombre = Provider.of<ProductProvider>(context, listen: false);
     return new WillPopScope(
         onWillPop: () async => false,
         child: new Scaffold(
           appBar: AppBar(
             title: Text(
-              'Historial',
+              'Ordenes',
               //AppLocalizations.of(context)!.carrito,
               style: style.copyWith(
                 color: Colors.black,
@@ -45,24 +47,17 @@ class _HistorialState extends State<Historial> {
             ),
             backgroundColor: Colors.teal[100],
             iconTheme: IconThemeData(color: Colors.black),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.search,
-                ),
-              )
-            ],
           ),
           backgroundColor: Colors.white,
-          drawer: MyDrawer("Historial"),
+          drawer: MyDrawer("Ordenes"),
           body: _isLoading
               ? Center(
                   child: CircularProgressIndicator(),
                 )
               : ListView.builder(
-                  itemCount: ordersData.orders.length,
-                  itemBuilder: (ctx, i) => OrderItem(ordersData.orders[i]),
+                  itemCount: ordersData.ordersVendedor.length,
+                  itemBuilder: (ctx, i) =>
+                      VendedorOrdenesItem(ordersData.ordersVendedor[i]),
                 ),
         ));
   }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../screens/cliente/carrito.dart';
-import '../screens/cliente/historial.dart';
-import '../screens/cliente/productos.dart';
-import '../widgets/prueba.dart';
+import 'package:shopalready/providers/auth.dart';
+import 'package:shopalready/widgets/prueba.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import '../providers/auth.dart';
+import 'vendedor_historial.dart';
+import 'vendedor_productos.dart';
 
 class MyDrawer extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,6 +16,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final email = Provider.of<Auth>(context, listen: false);
+
     Widget salirButton = TextButton(
       child: Text(AppLocalizations.of(context)!.salir),
       onPressed: () {
@@ -39,7 +39,7 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('Cliente'),
+            accountName: Text('Vendedor'),
             accountEmail: Text(email.emailId),
             decoration: BoxDecoration(
               color: Colors.red[200],
@@ -53,27 +53,19 @@ class MyDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               if (this.currentPage == "Productos") return;
 
-              Navigator.pushReplacementNamed(context, Productos.routeName);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text(AppLocalizations.of(context)!.carrito),
-            onTap: () {
-              Navigator.of(context).pop();
-              if (this.currentPage == "Carrito") return;
-
-              Navigator.pushReplacementNamed(context, Carrito.routeName);
+              Navigator.pushReplacementNamed(
+                  context, VendedorProductos.routeName);
             },
           ),
           ListTile(
             leading: Icon(Icons.receipt),
-            title: Text("Historial"),
+            title: Text("Ordenes"),
             onTap: () {
               Navigator.of(context).pop();
-              if (this.currentPage == "Historial") return;
+              if (this.currentPage == "Ordenes") return;
 
-              Navigator.pushReplacementNamed(context, Historial.routeName);
+              Navigator.pushReplacementNamed(
+                  context, VendedorHistorial.routeName);
             },
           ),
           ListTile(

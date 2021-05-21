@@ -4,10 +4,10 @@ import 'package:shopalready/providers/cart.dart';
 import 'package:shopalready/providers/product.dart';
 import 'package:shopalready/screens/cliente/carrito.dart';
 import 'package:shopalready/widgets/badge.dart';
-import '../../widgets/diseño_productos.dart';
+import '../../widgets/diseno_productos.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../widgets/drawer.dart';
 import '../../providers/products_provider.dart';
+import 'drawer.dart';
 
 class Productos extends StatefulWidget {
   static const routeName = "productos";

@@ -122,7 +122,7 @@ class _ProductCardState extends State<ProductCard> {
                   content: Text('Se agregó el producto al carrito'),
                   duration: Duration(seconds: 2),
                   action: SnackBarAction(
-                    label: 'deshacer',
+                    label: 'Deshacer',
                     onPressed: () {
                       cart.removeSingleItem(productos.id);
                     },

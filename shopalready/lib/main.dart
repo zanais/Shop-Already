@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopalready/providers/order_vendedor.dart';
 import 'package:shopalready/providers/products_provider.dart';
 import './screens/cliente/carrito.dart';
 import './screens/cliente/historial.dart';
@@ -16,6 +17,7 @@ import 'package:provider/provider.dart';
 import './providers/auth.dart';
 import 'providers/cart.dart';
 import 'providers/orders.dart';
+import 'screens/vendedor/vendedor_historial.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +63,15 @@ class _MyAppState extends State<MyApp> {
             previousOrders == null ? [] : previousOrders.orders,
           ),
         ),
+        ChangeNotifierProxyProvider<Auth, OrdersVendedor>(
+            create: (ctx) => OrdersVendedor('', '', []),
+            update: (ctx, auth, previousOrdersVendedor) => OrdersVendedor(
+                  auth.token,
+                  auth.userId,
+                  previousOrdersVendedor == null
+                      ? []
+                      : previousOrdersVendedor.ordersVendedor,
+                ))
       ],
       child: MaterialApp(
         locale: myLocale,
@@ -80,6 +91,7 @@ class _MyAppState extends State<MyApp> {
           Registro.routeName: (ctx) => Registro(),
           VendedorProductos.routeName: (ctx) => VendedorProductos(),
           Renuevo.routeName: (ctx) => Renuevo(),
+          VendedorHistorial.routeName: (ctx) => VendedorHistorial(),
         },
       )
       //home: TiposDeUsuarios(),

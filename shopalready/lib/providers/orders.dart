@@ -98,9 +98,4 @@ class Orders with ChangeNotifier {
     //print(_direccion);
     notifyListeners();
   }
-
-  /*void clear() {
-    _direccion = '';
-    notifyListeners();
-  }*/
 }

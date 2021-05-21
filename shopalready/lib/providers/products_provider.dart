@@ -19,12 +19,12 @@ class ProductProvider with ChangeNotifier {
         'https://shopalready-1f15c-default-rtdb.firebaseio.com/products.json?auth=$authToken');
     try {
       final response = await http.get(url);
-      final extracteData = json.decode(response.body) as Map<String, dynamic>;
+      final algoData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
-      if (extracteData == null) {
+      if (algoData == null) {
         return;
       }
-      extracteData.forEach((prodId, prodData) {
+      algoData.forEach((prodId, prodData) {
         loadedProducts.add(Product(
           id: prodId,
           title: prodData['titulo'],

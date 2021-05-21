@@ -12,7 +12,7 @@ enum Numeros { uno, dos }
 class _PruebaState extends State<Prueba> {
   //int radioValue = 0;
 
-  Numeros? number = Numeros.uno;
+  Numeros? number;
 
   @override
   Widget build(BuildContext context) {

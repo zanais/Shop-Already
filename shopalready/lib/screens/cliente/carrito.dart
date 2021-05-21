@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../widgets/drawer.dart';
 import '../../widgets/badge.dart';
 import 'package:provider/provider.dart';
 import '../../providers/cart.dart' show Cart;
 import '../../widgets/diseno_cart_item.dart';
 import '../../providers/orders.dart';
+import 'drawer.dart';
 
 class Carrito extends StatefulWidget {
   static const routeName = "carrito";
@@ -79,7 +79,7 @@ class _ProductosState extends State<Carrito> {
                           cart.items.values.toList()[i].title,
                         )),
               ),
-              direccion,
+              //direccion,
               Card(
                 margin: EdgeInsets.all(15),
                 child: Padding(
