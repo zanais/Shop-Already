@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shopalready/http_exceptions.dart';
 import 'package:shopalready/login/registrado.dart';
 import 'package:shopalready/providers/auth.dart';
+import 'package:shopalready/widgets/prueba.dart';
 
 class Registro extends StatefulWidget {
   static const routeName = "registro";
@@ -73,6 +74,7 @@ class _RegistroPage extends State<Registro> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat');
   @override
   Widget build(BuildContext context) {
+    int userType = ModalRoute.of(context)!.settings.arguments as int;
     //Size size = MediaQuery.of(context).size;
     final email = TextFormField(
       validator: (value) {
@@ -167,68 +169,72 @@ class _RegistroPage extends State<Registro> {
           color: Colors.black,
         ),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'nombre',
+        hintText: AppLocalizations.of(context)!.nombre,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-            child: Container(
-          color: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          child: Form(
-            key: _formKey,
-            child: InkWell(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+    var nom = '';
+    if (userType == 1) {
+      nom = AppLocalizations.of(context)!.cliente;
+    } else {
+      nom = AppLocalizations.of(context)!.vendedor;
+    }
+    return Material(
+        child: Container(
+      color: userType == 1 ? Colors.white : Colors.red[200],
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+      child: Form(
+        key: _formKey,
+        child: InkWell(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 35.0),
+                Text(AppLocalizations.of(context)!.registrate + ', $nom',
+                    style: style.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35.0)),
+                SizedBox(height: 30.0),
+                nombreButon,
+                SizedBox(
+                  height: 20.0,
+                ),
+                email,
+                SizedBox(height: 20.0),
+                password,
+                SizedBox(height: 20.0),
+                password2,
+                SizedBox(height: 20.0),
+                registroButon,
+                SizedBox(height: 40.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    SizedBox(height: 35.0),
-                    Text(AppLocalizations.of(context)!.registrate,
+                    Text(
+                      AppLocalizations.of(context)!.yatienes,
+                      style: style.copyWith(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    GestureDetector(
+                      child: Text(
+                        AppLocalizations.of(context)!.iniSe,
                         style: style.copyWith(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 35.0)),
-                    SizedBox(height: 70.0),
-                    nombreButon,
-                    SizedBox(
-                      height: 20.0,
+                            fontSize: 15.0),
+                      ),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
                     ),
-                    email,
-                    SizedBox(height: 20.0),
-                    password,
-                    SizedBox(height: 20.0),
-                    password2,
-                    SizedBox(height: 20.0),
-                    registroButon,
-                    SizedBox(height: 40.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text(
-                          AppLocalizations.of(context)!.yatienes,
-                          style: style.copyWith(
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        GestureDetector(
-                          child: Text(
-                            AppLocalizations.of(context)!.iniSe,
-                            style: style.copyWith(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0),
-                          ),
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context, '/');
-                          },
-                        ),
-                      ],
-                    )
-                  ]),
-            ),
-          ),
-        )));
+                  ],
+                ),
+              ]),
+        ),
+      ),
+    ));
   }
 }

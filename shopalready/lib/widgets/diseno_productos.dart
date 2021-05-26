@@ -4,6 +4,7 @@ import 'package:shopalready/providers/cart.dart';
 //import 'package:shopalready/providers/products_provider.dart';
 //import '../screens/cliente/productos.dart';
 import '../providers/product.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductCard extends StatefulWidget {
   @override
@@ -104,7 +105,8 @@ class _ProductCardState extends State<ProductCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'Cantidad: ${productos.cantidad}',
+                      AppLocalizations.of(context)!.cantidad +
+                          ': ${productos.cantidad}',
                       style: style.copyWith(fontSize: 20),
                     ),
                   ),
@@ -119,10 +121,10 @@ class _ProductCardState extends State<ProductCard> {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Se agregó el producto al carrito'),
+                  content: Text(AppLocalizations.of(context)!.seagrego),
                   duration: Duration(seconds: 2),
                   action: SnackBarAction(
-                    label: 'Deshacer',
+                    label: AppLocalizations.of(context)!.deshacer,
                     onPressed: () {
                       cart.removeSingleItem(productos.id);
                     },
@@ -132,26 +134,6 @@ class _ProductCardState extends State<ProductCard> {
             },
             color: Colors.teal,
           )
-          /*ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.pressed)) return Colors.blue;
-                return Colors.yellow;
-              }),
-              alignment: Alignment.centerLeft,
-            ),
-            onPressed: () {
-              print("prsionado");
-            },
-            child: Text(
-              "Comprar",
-              style: style.copyWith(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )*/
         ],
       ),
     );

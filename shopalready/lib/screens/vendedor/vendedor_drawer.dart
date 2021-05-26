@@ -39,10 +39,10 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('Vendedor'),
+            accountName: Text(AppLocalizations.of(context)!.vendedor),
             accountEmail: Text(email.emailId),
             decoration: BoxDecoration(
-              color: Colors.red[200],
+              color: Colors.teal[200],
             ),
           ),
           ListTile(
@@ -59,7 +59,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.receipt),
-            title: Text("Ordenes"),
+            title: Text(AppLocalizations.of(context)!.ordenes),
             onTap: () {
               Navigator.of(context).pop();
               if (this.currentPage == "Ordenes") return;

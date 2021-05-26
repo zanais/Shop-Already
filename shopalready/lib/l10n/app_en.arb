@@ -25,5 +25,12 @@
   "yatienes":"Do you have an account?",
   "cliente": "Client",
   "vendedor": "Seller",
-  "bienvenido": "Welcome"
+  "bienvenido": "Welcome",
+  "cantidad":"In Stock",
+  "historial": "Purched history",
+  "deshacer":"Undo",
+  "seagrego":"Product was added to the cart",
+  "comprar":"BUY",
+  "nombre":"Full Name",
+  "ordenes":"Orders"
 }

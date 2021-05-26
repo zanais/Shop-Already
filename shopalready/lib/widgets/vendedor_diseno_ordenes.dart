@@ -24,7 +24,6 @@ class _VendedorOrdenesItemState extends State<VendedorOrdenesItem> {
       margin: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
-          Text(widget.order.id),
           ListTile(
             title: Text('\$${widget.order.cantidad} MXN'),
             subtitle: Text(

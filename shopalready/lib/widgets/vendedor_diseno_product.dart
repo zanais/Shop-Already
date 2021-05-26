@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopalready/providers/product.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VendedorProductosDiseno extends StatefulWidget {
   @override
@@ -101,7 +102,8 @@ class _VendedorProductosDisenoState extends State<VendedorProductosDiseno> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'Cantidad: ${productos.cantidad}',
+                      AppLocalizations.of(context)!.cantidad +
+                          ': ${productos.cantidad}',
                       style: style.copyWith(fontSize: 20),
                     ),
                   ),

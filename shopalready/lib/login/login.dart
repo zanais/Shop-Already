@@ -185,7 +185,8 @@ class _LoginPage extends State<Login> {
                                 fontWeight: FontWeight.bold)),
                         onTap: () {
                           Navigator.pushReplacementNamed(
-                              context, Registro.routeName);
+                              context, Registro.routeName,
+                              arguments: userType);
                         },
                       ),
                     ],

@@ -40,7 +40,7 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('Cliente'),
+            accountName: Text(AppLocalizations.of(context)!.cliente),
             accountEmail: Text(email.emailId),
             decoration: BoxDecoration(
               color: Colors.red[200],
@@ -69,7 +69,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.receipt),
-            title: Text("Historial"),
+            title: Text(AppLocalizations.of(context)!.historial),
             onTap: () {
               Navigator.of(context).pop();
               if (this.currentPage == "Historial") return;

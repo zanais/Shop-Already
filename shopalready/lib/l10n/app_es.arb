@@ -25,5 +25,12 @@
   "yatienes":"¿Ya tienes cuenta?",
   "cliente": "Cliente",
   "vendedor":"Vendedor",
-  "bienvenido": "Bienvenido"
+  "bienvenido": "Bienvenido",
+  "cantidad":"Disponible",
+  "historial": "Historial",
+  "deshacer":"Deshacer",
+  "seagrego":"Se agregó el producto al carrito",
+  "comprar":"COMPRAR",
+  "nombre":"Nombre Completo",
+  "ordenes": "Ordenes"
 }

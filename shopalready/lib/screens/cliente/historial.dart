@@ -3,7 +3,7 @@ import '../../providers/orders.dart' show Orders;
 import 'package:provider/provider.dart';
 import '../../widgets/historial_item.dart';
 import 'drawer.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Historial extends StatefulWidget {
   static const routeName = "historial";
@@ -37,7 +37,7 @@ class _HistorialState extends State<Historial> {
         child: new Scaffold(
           appBar: AppBar(
             title: Text(
-              'Historial',
+              AppLocalizations.of(context)!.historial,
               //AppLocalizations.of(context)!.carrito,
               style: style.copyWith(
                 color: Colors.black,
@@ -45,14 +45,6 @@ class _HistorialState extends State<Historial> {
             ),
             backgroundColor: Colors.teal[100],
             iconTheme: IconThemeData(color: Colors.black),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.search,
-                ),
-              )
-            ],
           ),
           backgroundColor: Colors.white,
           drawer: MyDrawer("Historial"),

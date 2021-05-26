@@ -4,6 +4,7 @@ import 'package:shopalready/widgets/vendedor_diseno_ordenes.dart';
 import 'vendedor_drawer.dart';
 //import '../../providers/orders.dart' show Orders;
 import '../../providers/order_vendedor.dart' show OrdersVendedor;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VendedorHistorial extends StatefulWidget {
   static const routeName = "vendedor_historial";
@@ -39,7 +40,7 @@ class _VendedorHistorialState extends State<VendedorHistorial> {
         child: new Scaffold(
           appBar: AppBar(
             title: Text(
-              'Ordenes',
+              AppLocalizations.of(context)!.ordenes,
               //AppLocalizations.of(context)!.carrito,
               style: style.copyWith(
                 color: Colors.black,

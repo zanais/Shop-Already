@@ -26,16 +26,7 @@ class _ProductosState extends State<Carrito> {
     final cart = Provider.of<Cart>(context);
 
     //Size size = MediaQuery.of(context).size;
-    final direccion = TextFormField(
-      onFieldSubmitted: (value) {},
-      //controller: controlador,
-      decoration: InputDecoration(
-          prefixIcon: Icon(Icons.article),
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Dirección',
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(20.0))),
-    );
+
     return new WillPopScope(
       onWillPop: () async => false,
       child: new Scaffold(
@@ -96,7 +87,7 @@ class _ProductosState extends State<Carrito> {
                       TextButton(
                         child: _isLoading
                             ? CircularProgressIndicator()
-                            : Text('COMPRAR'),
+                            : Text(AppLocalizations.of(context)!.comprar),
                         onPressed: (cart.totalAmount <= 0 || _isLoading)
                             ? null
                             : () async {

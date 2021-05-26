@@ -48,7 +48,7 @@ class OrdersVendedor with ChangeNotifier {
     final Map<String, dynamic> exctractedData = json.decode(response.body);
 
     Map<String, dynamic> prueba = exctractedData;
-    print('++++++BBBBBBBBBBBBBBBBBBBB++++++');
+
     var userkeys = prueba.keys.toList();
     List<Map<String, dynamic>> newOrders = [];
     List<String> orderkeys = [];
